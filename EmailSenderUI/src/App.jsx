@@ -1,46 +1,49 @@
-import { useEffect, useState } from 'react'
 import './App.css'
-import SendEmail from './Components/SendEmail';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function App() {
-
-  var [isLoggedIn, setIsLoggedIn] = useState(false);
-  var [loggedUser, setLoggedUser] = useState({});
+  var [loggedInUser, setLoggedInUser] = useState(null);
   const navigate = useNavigate()
 
   useEffect(() => {
-    localStorage.setItem('User', 
+
+    localStorage.setItem('User',
       JSON.stringify({
-        email : "abc@def.com",
-        addedOn : new Date()
+        email: "abc@def.com",
+        addedOn: new Date()
       }));
-    localStorage.removeItem('User');
+
     var user = JSON.parse(localStorage.getItem('User'));
 
     let addedBeforTimeInHour = undefined;
 
-    if(user)
-      addedBeforTimeInHour = (new Date().getTime() - new Date(user.addedOn).getTime()) / (1000 * 60 * 24)  
+    if (user)
+    {
+      addedBeforTimeInHour = (new Date().getTime() - new Date(user.addedOn).getTime()) / (1000 * 60 * 24)
+    }
 
-    if(!addedBeforTimeInHour || addedBeforTimeInHour > 24){
-      localStorage.removeItem('Name');
-      setIsLoggedIn(false)
-      setLoggedUser(null)
+    if (addedBeforTimeInHour === undefined || addedBeforTimeInHour > 24) {
+      localStorage.removeItem('User');
+      setLoggedInUser(null)
+      console.log("Its false");
     }
-    else{
-      setIsLoggedIn(true)
-      setLoggedUser(user)
+    else {
+      console.log("Its true");
+      setLoggedInUser(user)
     }
-  },[])
+  }, [])
 
 
   useEffect(() => {
-    if(!isLoggedIn)
+    if (loggedInUser === null) {
       navigate('/login')
-    else
-      navigate('home')
-  },[setIsLoggedIn])
+    }
+    else {
+      navigate('/')
+    }
+  }, [loggedInUser])
 
   return (
     <Outlet />
