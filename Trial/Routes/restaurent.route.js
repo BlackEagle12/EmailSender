@@ -15,8 +15,6 @@ router.get("/", async (req, res, next) => {
 				rating: res.rating,
 			};
 		});
-
-		console.log(result);
 		res.send(list);
 	} catch (error) {
 		next(error);

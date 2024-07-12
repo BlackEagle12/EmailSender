@@ -23,8 +23,6 @@
 mono_crash.*
 
 # Build results
-/Trial/package-lock.json
-/Trial/node_modules/*
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -404,3 +402,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+package-lock.json
