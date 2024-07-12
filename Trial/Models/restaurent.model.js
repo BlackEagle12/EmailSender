@@ -1,3 +1,4 @@
+const { type } = require("express/lib/response");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -18,6 +19,18 @@ const RestaurentSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	restaurantMenu: [
+		{
+			itemName: {
+				type: String,
+				require: true,
+			},
+			price: {
+				type: Number,
+				require: true,
+			},
+		},
+	],
 });
 
 const Restaurent = mongoose.model("restaurent", RestaurentSchema);
